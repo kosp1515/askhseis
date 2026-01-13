@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table,tr,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+            height: 100px;
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <table id="myTable">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <div id="timer"></div>
+    <button id="btn" onclick="btnClick()">Start</button>
+
+
+    <script>
+
+        let timerId;
+        let timeLeft=10;
+        let counterG;
+        let counterR;
+        const btn= document.getElementById('btn');
+
+        function fillTable(){
+            
+            btn.disabled= true;
+            const table=document.getElementById('myTable');
+            table.innerHTML='';
+
+            for(let i=0;i<4;i++){
+                let row=table.insertRow();
+                for(let j=0;j<4;j++){
+                    let cell=row.insertCell();
+
+                    const num=Math.floor(Math.random()*9)+1;
+                    cell.textContent=num
+                }
+            }
+        }
+        function timer(){
+            clearInterval(timerId);
+            timeLeft=10;
+            counterG=0;
+            counterR=0;
+
+            const timerDisp=document.getElementById('timer');
+            timerId=setInterval(function(){
+                timeLeft--;
+                timerDisp.textContent='Time Left: '+ timeLeft +" s";
+
+                if(timeLeft<=0){
+                    clearInterval(timerId);
+                    btn.disabled=false;
+                    alert('Green: '+ counterG +' Red: '+counterR);
+
+                }
+            },1000);
+            
+        }
+
+        function clickCells(){
+            const table=document.getElementById('myTable');
+            counterG=0;
+            counterR=0;
+            table.addEventListener('click',function(event){
+                const clickedCell=event.target;
+
+                if(clickedCell.tagName == 'TD'){
+                    const clickedValue=parseInt(clickedCell.textContent);
+                    if(clickedValue>5){
+                        clickedCell.style.backgroundColor='green';
+                        counterG++
+                    } else {
+                        clickedCell.style.backgroundColor='red';
+                        counterR++
+
+                    }
+                }
+            });
+        }
+
+        function btnClick(){
+
+            fillTable();
+            timer();
+        }
+
+        clickCells();
+    </script>
+</body>
