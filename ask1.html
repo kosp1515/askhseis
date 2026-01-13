@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+   
+        <style>
+             table,td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+            height: 100px;
+            width: 400px;
+                
+             }
+        </style>
+        
+    
+    
+</head>
+<body>
+    <div id="number_show"></div>
+    <table id="myTable">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <div id="timer"></div>
+    <button onclick="buttonClick()">Submit</button>
+    <script>
+            let timeLeft=30;
+            let timerId;
+            let counterG;
+            let counterR;
+
+            function randomOneNine(){
+                const randomNum=Math.floor(Math.random()*9)+1;
+                document.getElementById('number_show').textContent=randomNum;
+            }
+            function fillTable(){
+                const table=document.getElementById('myTable');
+                table.innerHTML='';
+
+                for(let i=0;i<5;i++){
+                    let row=table.insertRow();
+
+                    for(let j=0;j<5;j++){
+                        let cell=row.insertCell();
+
+                        let num=Math.floor(Math.random()*100)+1
+
+                        cell.textContent=num;
+                    }
+                }
+
+            }
+            
+           
+            function colorCells(){
+                const table=document.getElementById('myTable');
+                
+                table.addEventListener('click',function(event){
+                    const numDiv=parseInt(document.getElementById('number_show').textContent);
+                    const clickedCell=event.target;
+                    if(clickedCell.tagName === 'TD'){
+                        const clickedValue=parseInt(clickedCell.textContent);
+                    
+                    if(clickedValue%numDiv==0){
+                        clickedCell.style.backgroundColor='green';
+                        counterG++;
+                    } else {
+                        clickedCell.style.backgroundColor='red';
+                        counterR++;
+                    }
+                }
+
+                });
+            }
+
+           
+
+            function startTimer(){
+                clearInterval(timerId);
+                timeLeft=30;
+                counterG=0;
+                counterR=0;
+
+                const timerDisplay=document.getElementById('timer');
+
+                timerId=setInterval(function(){
+                    timeLeft--;
+                    timerDisplay.textContent='Time Left: '+ timeLeft+ 's';
+
+                    if(timeLeft<=0){
+                        clearInterval(timerId);
+                        alert('Correct: '+ counterG);
+                    }
+                },1000);
+            }
+
+
+             function buttonClick(){
+                randomOneNine();
+                fillTable();
+                startTimer();
+            }
+            colorCells();
+        </script>
+</body>

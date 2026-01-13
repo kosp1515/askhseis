@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table,tr,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+            height: 100px;
+            width: 400px;
+            background-color: yellow;
+
+        }
+    </style>
+</head>
+<body>
+    <table id="myTable">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <button id="btn" onclick="btnClick()">Start</button>
+
+    <script>
+
+        let counterClicks=0;
+        let avgClicked;
+        const btn=document.getElementById('btn');
+        function btnClick(){
+
+
+            counterClicks=0;
+            avgClicked=0;
+            
+            btn.disabled= true;
+            const table=document.getElementById('myTable');
+            table.innerHTML=';'
+
+            for(let i=0;i<5;i++){
+                let row=table.insertRow();
+                for(let j=0;j<5;j++){
+                    let cell=row.insertCell();
+
+                    const num=Math.floor(Math.random()*9)+1;
+
+                    cell.textContent=num;
+                    if(parseInt(cell.textContent)%2==0){
+                        cell.style.backgroundColor='red';
+                    } else{
+                        cell.style.backgroundColor='green';
+                    }
+                }
+            }
+            
+
+
+        }
+        function incDec(){
+            const table=document.getElementById('myTable');
+            table.addEventListener('click',function(event){
+                const clickedCell=event.target;
+            
+
+                
+                if(clickedCell.tagName === 'TD'){
+                    let clickedValue=parseInt(clickedCell.textContent);
+                    avgClicked+=clickedValue;
+                    
+                    const currentColor=clickedCell.style.backgroundColor;
+                    if(currentColor == 'rgb(255, 0, 0)' || currentColor == 'red' ){
+                        clickedValue--;
+                        
+                        clickedCell.style.backgroundColor='green';
+                    } else if(currentColor == 'rgb(0, 255, 0)' || currentColor == 'green'){
+                        clickedValue++;
+                        
+                        clickedCell.style.backgroundColor='red';
+                    }
+                    clickedCell.textContent=clickedValue;
+                    counterClicks++;
+
+                }
+                if(counterClicks>=10){
+                btn.disabled= false;
+                alert('Avg: '+(avgClicked/10));
+
+
+            }
+            
+            }
+            );
+
+            
+
+        }
+
+
+        incDec();
+
+    </script>
+</body>
