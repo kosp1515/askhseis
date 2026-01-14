@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        #table1,#table2{
+            border: 1px solid black;
+            height:200px;
+            width: 800px;
+            border-collapse: collapse;
+            margin: 50px;
+            
+        }
+        td{
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: center;
+            height: 200px;
+            width: 200px;
+            
+            
+        }
+    </style>
+</head>
+<body>
+
+    <table id="table1">
+        <tr>
+            <td><img src="bleed 26-08-2024 (2).png" alt="1" width="200px" height="200px"></td>
+            <td><img src="corruption 02-07-2024.png" alt="2" width="200px" height="200px"></td>
+            <td><img src="shoes 12-08-2024.png" alt="3" width="200px" height="200px"></td>
+            <td><img src="vivid warm 04-07-2024.png" alt="4" width="200px" height="200px"></td>
+        </tr>
+    </table>
+    <table id="table2">
+        <th></th>
+    </table>
+    <button onclick="btnClick()">return pics</button>
+
+    <script>
+        let index=0;
+        let selCell;
+        function imgClick(){
+            const table1=document.getElementById('table1');
+            const table2=document.getElementById('table2');
+            const row=table2.insertRow();
+            table1.addEventListener('click',function(event){
+                const clickedCell=event.target.closest('td');
+
+                if(clickedCell.tagName === 'TD'){
+                    const imgSel=clickedCell.querySelector('img');
+                    
+                    imgSel.remove();
+                    selCell=row.insertCell(index++);
+                    selCell.appendChild(imgSel);
+                    
+                }
+
+
+            });
+        }
+
+        function btnClick(){
+            const table2Img=document.querySelectorAll('#table2 img');
+            const table1Cells=document.querySelectorAll('#table1 td')
+            
+            table2Img.forEach((img,index) => {
+                setTimeout(()=>{
+                    for(let cell of table1Cells){
+                        if(cell.children.length === 0){
+                            const oldCell=img.parentElement;
+                            cell.appendChild(img);
+
+                            if(oldCell){
+                                oldCell.remove();
+                            }
+                            break;
+                        }
+                    }
+                },index*3000);
+            });
+
+        }
+
+        imgClick();
+    </script>
+</body>
