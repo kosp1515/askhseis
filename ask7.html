@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table{
+            border: 1px solid black;
+            width: 500px;
+            height: 500px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <button id="btn" onclick="btnClick()">Create</button>
+    <table id="myTable">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <p id="p1"></p>
+
+    <script>
+        let counter;
+        let hexaCode;
+        let hexaF;
+        function btnClick(){
+            counter=0;
+            hexaCode='';
+            hexaF='';
+
+
+            const table=document.getElementById('myTable');
+            table.textContent='';
+            for(let i=0;i<5;i++){
+                let row=table.insertRow();
+                for(let j=0;j<5;j++){
+                    let cell=row.insertCell();
+
+                    let num=Math.floor(Math.random()*90)+10;
+                    cell.textContent=num;
+                }
+            }
+
+                        const allCells=document.querySelectorAll('td,tr');
+            allCells.forEach(el =>{
+                el.style.border='1px solid black';
+                table.style.backgroundColor='white';
+            });
+
+
+
+        }
+
+        function cellClick(){
+            hexaCode='';
+            const table=document.getElementById('myTable');
+            counter=0;
+            table.addEventListener('click',function(event){
+                const clickedCell=event.target;
+                if(clickedCell.tagName === 'TD'){
+                    if(counter<3){
+                        const clickedValue=clickedCell.textContent;
+                        counter++
+                        hexaCode+=clickedValue;
+                    }
+                }
+                if(counter==3){
+                    hexaF=`#${hexaCode}`;
+                    console.log(hexaF);
+                    table.style.backgroundColor= `${hexaF}`;
+                }
+
+            });
+
+        }
+
+        cellClick();
+
+        
+    </script>
+</body>
